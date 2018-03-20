@@ -50,6 +50,7 @@ export default new Vuex.Store( {
       state.globalLoading = payload
     },
     SET_ACCOUNTS( state, payload ) {
+      console.log(  payload )
       state.accounts = payload
     },
     ADD_ACCOUNTS( state, payload ) {
