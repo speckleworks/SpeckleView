@@ -55,19 +55,22 @@
     </v-alert>
     <!-- card actions -->
     <v-slide-y-transition>
-      <v-card-actions v-show='true' class='pl-2' :class='{ faded: fab }' style='transition: all .3s ease'>
-        <v-spacer></v-spacer>
-        <v-btn class='xs-actions' icon @click.native='toggleLayers' small>
-          <v-icon class='xs-actions'>{{ showLayers ? 'keyboard_arrow_up' : 'layers' }}</v-icon>
-        </v-btn>
-        <!--         <v-btn class='xs-actions' icon @click.native='toggleLog' small>
-          <v-icon class='xs-actions'>{{ showLog ? 'keyboard_arrow_up' : 'list' }}</v-icon>
-        </v-btn> -->
-        <!-- <v-btn class='xs-actions' icon @click.native='toggleChildren' small>
-          <v-icon class='xs-actions'>{{ showChildren ? 'keyboard_arrow_up' : 'history' }}</v-icon>
-        </v-btn> -->
-        <extra-view-menu :streamId='client.stream.streamId' :restApi='client.BaseUrl'></extra-view-menu>
-      </v-card-actions>
+        <v-card-actions v-show='true' class='pl-2' :class='{ faded: fab }' style='transition: all .3s ease'>
+            <v-spacer></v-spacer>
+            <v-btn v-if="paused" class='xs-actions' icon @click.native='refreshStream' small>
+                <v-icon class='xs-actions'>cached</v-icon>
+            </v-btn>
+            <v-btn class='xs-actions' icon @click.native='toggleLayers' small>
+                <v-icon class='xs-actions'>{{ showLayers ? 'keyboard_arrow_up' : 'layers' }}</v-icon>
+            </v-btn>
+            <!--         <v-btn class='xs-actions' icon @click.native='toggleLog' small>
+      <v-icon class='xs-actions'>{{ showLog ? 'keyboard_arrow_up' : 'list' }}</v-icon>
+    </v-btn> -->
+            <!-- <v-btn class='xs-actions' icon @click.native='toggleChildren' small>
+      <v-icon class='xs-actions'>{{ showChildren ? 'keyboard_arrow_up' : 'history' }}</v-icon>
+    </v-btn> -->
+            <extra-view-menu :streamId='client.stream.streamId' :restApi='client.BaseUrl'></extra-view-menu>
+        </v-card-actions>
     </v-slide-y-transition>
     <!-- layers -->
     <v-slide-y-transition>
