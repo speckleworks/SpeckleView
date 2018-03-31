@@ -60,7 +60,7 @@ export default {
   watch: {
     selectedAccountValue( value ) {
       if ( !value ) return
-      this.selectedAccount = this.accounts.find( ac => { return ac.serverName === value.split(', ')[0] && ac.email === value.split(', ')[1] } )
+      this.selectedAccount = this.accounts.find( ac => { return ac.serverName === value.split( ', ' )[ 0 ] && ac.email === value.split( ', ' )[ 1 ] } )
       API.getStreams( this.selectedAccount )
         .then( res => {
           this.fail = false
@@ -74,7 +74,8 @@ export default {
       if ( value ) {
         Interop.getLayersAndObjectsInfo( true )
           .then( res => {
-            this.$store.commit( 'SET_LAYERINFO', JSON.parse( res ) )
+            console.log( res )
+            this.$store.commit( 'SET_LAYERINFO', JSON.parse( window.atob( res ) ) )
             this.layerSelectionMap = this.layerInfo.map( layer => { return { selected: false, layerName: layer.layerName, objectCount: layer.objectCount } } )
           } )
         return

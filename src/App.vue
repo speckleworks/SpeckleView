@@ -2,40 +2,44 @@
   <div id="app">
     <v-app :dark='dark'>
       <!-- tabs with main content -->
-      <v-tabs v-model='active' dark grow fill-height>
-        <v-tabs-bar class='light-blue'>
-          <v-tabs-slider :class='{ "grey darken-3": dark, "white lighten-4": !dark, "elevation-4":true}' style='height:100%'></v-tabs-slider>
-          <v-tabs-item key='clients' href='clients'>
-            <span :class='{ "grey--text text--lighten-4": dark, "grey--text text--darken-4": !dark}'>Clients</span>
-          </v-tabs-item>
-          <v-tabs-item key='accounts' href='accounts'>
-            <span :class='{ "grey--text text--lighten-4": dark, "grey--text text--darken-4": !dark}'>Accounts</span>
-          </v-tabs-item>
-          <v-menu open-on-hover transition="slide-x-transition">
-            <v-tabs-item slot='activator' @click.native='showDev'>
-              <v-icon style='font-size: 14px;'>code</v-icon>
-            </v-tabs-item>
-            <v-tabs-item slot='activator' @click.native='dark=!dark'>
-              <v-icon style='font-size: 14px;'>wb_incandescent</v-icon>
-            </v-tabs-item>
-          </v-menu>
-        </v-tabs-bar>
-        <v-tabs-items fill-height>
-          <v-tabs-content id='clients' key='clients' fill-height>
-            <v-card flat class='transparent'>
-              <client-manager></client-manager>
-            </v-card>
-          </v-tabs-content>
-          <v-tabs-content id='accounts' key='accounts'>
-            <v-card flat>
-              <accounts-manager></accounts-manager>
-            </v-card>
-          </v-tabs-content>
-        </v-tabs-items>
+      <v-tabs v-model="active" color="blue" slider-color="white" dark grow>
+        <v-tab key='streams' ripple>
+          Streams
+        </v-tab>
+        <v-tab key='accounts' ripple>
+          Accounts
+        </v-tab>
+        <v-menu left bottom class="tabs__div">
+          <a class="tabs__item" slot="activator">
+            <v-icon>arrow_drop_down</v-icon>
+          </a>
+          <v-list xxxclass="grey lighten-3">
+            <v-list-tile>
+              <v-btn icon depressed @click.native='dark=!dark'>
+                <v-icon style='font-size: 14px;'>wb_incandescent</v-icon>
+              </v-btn flat>
+            </v-list-tile>
+            <v-list-tile>
+              <v-btn icon depressed @click.native='showDev'>
+                <v-icon style='font-size: 14px;'>code</v-icon>
+              </v-btn>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+        <v-tab-item key='streams'>
+          <v-card flat>
+            <client-manager></client-manager>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item key='accounts'>
+          <v-card flat>
+            <accounts-manager></accounts-manager>
+          </v-card>
+        </v-tab-item>
       </v-tabs>
       <!-- clients fab menu -->
       <v-fab-transition>
-        <v-speed-dial v-model='fab' hover fixed bottom right direction='top' v-show='active=="clients"'>
+        <v-speed-dial v-model='fab' :open-on-hover="true" fixed bottom right direction='top' v-show='active==0'>
           <v-btn slot='activator' fab v-model='fab' dark>
             <v-icon>add</v-icon>
             <v-icon>close</v-icon>
@@ -56,7 +60,7 @@
       </v-fab-transition>
       <!-- accounts fab menu -->
       <v-fab-transition>
-        <v-speed-dial v-model='fab' hover fixed bottom right direction='top' v-show='active=="accounts"'>
+        <v-speed-dial v-model='fab' :open-on-hover="true" fixed bottom right direction='top' v-show='active==1'>
           <v-btn slot='activator' fab v-model='fab' dark>
             <v-icon>add</v-icon>
           </v-btn>
@@ -94,6 +98,11 @@ export default {
     ClientManager,
     RegisterForm,
     LoginForm
+  },
+  watch: {
+    active( newValue ) {
+      console.log( newValue )
+    }
   },
   data( ) {
     return {
@@ -142,6 +151,8 @@ body {}
 .receiver-content {
   transition: all .3s ease;
 }
+
+
 
 
 
