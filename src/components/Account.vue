@@ -1,5 +1,5 @@
 <template>
-  <v-card class='account-content receiver-content'>
+  <v-card class='account-content'>
     <v-card-text>
       <v-layout>
         <v-flex xs2>
@@ -19,7 +19,7 @@
         <v-icon>down</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn small @click='pingDialog=true'>Get Streams</v-btn>
+      <v-btn small @click="openAdmin">Admin</v-btn>
       <v-btn small color='red' dark @click='deleteDialog=true'>delete</v-btn>
     </v-card-actions>
     <v-dialog v-model="deleteDialog" persistent>
@@ -128,6 +128,10 @@ export default {
     }
   },
   methods: {
+    openAdmin( ) {
+      let parts = this.account.restApi.split( '/' )
+      window.open( parts[ 0 ] + '//' + parts[ 2 ] + '/admin', '_blank' )
+    },
     deleteAccount( ) {
       Interop.removeAccount( this.account.fileName )
       this.$store.commit( 'DELETE_ACCOUNT', this.account.fileName )

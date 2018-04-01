@@ -156,11 +156,11 @@ body {}
 
 
 
-/*
+
 .receiver-content:last-child{
   margin-bottom: 90px;
 }
-*/
+
 
 .receiver-content:before {
   content: '\A';

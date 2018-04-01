@@ -1,5 +1,5 @@
 <template>
-  <v-card class='receiver-content'>
+  <v-card class='receiver-content elevation-0'>
     <!-- header - menu and title -->
     <v-layout align-center>
       <!-- speed dial menu -->

@@ -44,9 +44,13 @@ export default {
 }
 </script>
 <style scoped>
+
 .account {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.account:last-child {
+  margin-bottom: 90px;
 }
 </style>
