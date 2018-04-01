@@ -76,7 +76,7 @@ export default {
 
           API.registerAccount( { serverUrl: this.serverUrl, userEmail: this.userEmail, userName: this.userName, userSurname: this.userSurname, password: this.password } )
             .then( res => {
-              apiToken = res.data.apitoken
+              apiToken = res.data.resource.apitoken
               return API.getServerName( this.serverUrl )
             } )
             .then( res => {

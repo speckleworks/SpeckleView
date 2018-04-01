@@ -73,7 +73,7 @@ export default {
 
           API.loginAccount( { serverUrl: this.serverUrl, userEmail: this.userEmail, password: this.password } )
             .then( res => {
-              apiToken = res.data.apiToken
+              apiToken = res.data.resource.apitoken
               return API.getServerName( this.serverUrl )
             } )
             .then( res => {
