@@ -2,7 +2,7 @@
   <v-layout @mouseover='mouseOver' @mouseleave='mouseOut' align-center>
     <v-flex class='xs8 text-xs-left layername pl-4'>
       <span class=''>{{ layer.name }}</span>
-      <span class="caption grey--text"> Object count: {{layer.objectCount }} </span>
+      <span class="caption grey--text"> ({{layer.objectCount }} objs) </span>
     </v-flex>
     <v-flex class='xs1 text-xs-center'>
       <v-btn icon small flat @click.native='visible=!visible' @dblclick='toggleAll' color='grey' xxclass='ma-0'>
@@ -52,10 +52,14 @@ export default {
       EventBus.$emit( 'layer-set-all-vis', { state: this.visible, clientId: this.clientId } )
     },
     mouseOver( ) {
-      Interop.setLayerHover( this.clientId, this.layer.guid, true )
+      console.log( 'mouseOver' )
+      this.$emit( 'setLayerHover', this.clientId, this.layer.guid )
+      // Interop.setLayerHover( this.clientId, this.layer.guid, true )
     },
     mouseOut( ) {
-      Interop.setLayerHover( this.clientId, this.layer.guid, false )
+      console.log( 'mouseOut' )
+      this.$emit( 'hideLayerHover', this.clientId, this.layer.guid )
+      // Interop.setLayerHover( this.clientId, this.layer.guid, false )
     },
     bake( ) {
       Interop.bakeLayer( this.clientId, this.layer.guid )

@@ -24,13 +24,15 @@ export default new Vuex.Store( {
     getUserAccounts( context ) {
       Interop.getUserAccounts( )
         .then( res => {
+          console.log( 'getuseraccounts' ,res )
           context.commit( 'SET_ACCOUNTS', JSON.parse( res ) )
         } )
         .catch( err => {} )
     },
     getFileStreams( context ) {
-      Interop.getFileStreams( )
+      Interop.getAllClients( )
         .then( res => {
+          console.log( 'getallclients' ,res )
           context.commit( 'SET_CLIENTS', JSON.parse( res ) )
         } )
         .catch( err => {} )

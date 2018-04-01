@@ -57,7 +57,7 @@ export default {
       API.getStreams( this.selectedAccount )
         .then( res => {
           this.fail = false
-          this.streams = res.streams
+          this.streams = res.resources
           this.selectedStream = null
         } )
         .catch( err => {

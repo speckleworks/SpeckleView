@@ -7,6 +7,8 @@ import VeeValidate from 'vee-validate'
 import App from './App.vue'
 import Store from './store/store.js'
 
+import 'vuetify/dist/vuetify.min.css' 
+
 window.Store = Store
 
 import { EventBus } from './event-bus'
@@ -43,6 +45,7 @@ new Vue( {
   mounted( ) {
     // Populate with existing accounts
     this.$store.dispatch( 'getUserAccounts' )
+    this.$store.dispatch( 'getFileStreams' )
     console.log( this.$store )
     EventBus.$on( 'client-purge', ( ) => {
       console.log( 'purge-purge' )
@@ -50,28 +53,28 @@ new Vue( {
     } )
 
     EventBus.$on( 'client-add', ( streamId, data ) => {
-      console.log( 'client-add', streamId, JSON.parse( data ) )
+      console.log( 'client-add', streamId, data )
       this.$store.commit( 'ADD_CLIENT', JSON.parse( data ) )
     } )
 
     EventBus.$on( 'client-metadata-update', ( streamId, data ) => {
-      console.log( 'client-metadata-update', streamId )
+      console.log( 'client-metadata-update', streamId, data )
       this.$store.commit( 'SET_METADATA', { streamId: streamId, stream: JSON.parse( data ) } )
     } )
 
     EventBus.$on( 'client-log', ( streamId, data ) => {
-      console.log( 'client-log', streamId, JSON.parse( data ) )
+      console.log( 'client-log', streamId, data )
       this.$store.commit( 'APPEND_LOG', { streamId: streamId, data: JSON.parse( data ) } )
     } )
 
     EventBus.$on( 'client-error', ( streamId, data ) => {
-      console.log( 'client-error', streamId, JSON.parse( data ) )
+      console.log( 'client-error', streamId, data )
       this.$store.commit( 'APPEND_LOG', { streamId: streamId, data: JSON.parse( data ) } )
       this.$store.commit( 'SET_ERROR', { streamId: streamId, data: JSON.parse( data ) } )
     } )
 
     EventBus.$on( 'client-children', ( streamId, data ) => {
-      console.log( 'client-children' )
+      console.log( 'client-children', streamId,  data )
       this.$store.commit( 'SET_CLIENT_CHILDREN', { streamId: streamId, data: JSON.parse( data ) } )
     } )
 
@@ -86,7 +89,7 @@ new Vue( {
     } )
 
     EventBus.$on( 'client-progress-message', ( streamId, data ) => {
-      console.log( 'client-progress-message', data )
+      console.log( 'client-progress-message', streamId, data )
       this.$store.commit( 'SET_PROGRESS_MESSAGE', { streamId: streamId, message: data } )
     } )
 
@@ -96,11 +99,11 @@ new Vue( {
     } )
 
     EventBus.$on( 'client-ws-message', ( streamId, data ) => {
-      console.log( 'client-ws-message', streamId, JSON.parse( data ) )
+      console.log( 'client-ws-message', streamId, data )
     } )
 
     EventBus.$on( 'client-error', ( streamId, data ) => {
-      console.log( 'client-error', streamId, JSON.parse( data ) )
+      console.log( 'client-error', streamId, data )
       this.$store.commit( 'SET_ERROR', { streamId: streamId, data: JSON.parse( data ) } )
     } )
 

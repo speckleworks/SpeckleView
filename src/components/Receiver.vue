@@ -1,10 +1,10 @@
 <template>
-  <v-card class='receiver-content'>
+  <v-card class='receiver-content elevation-0'>
     <!-- header - menu and title -->
     <v-layout align-center>
       <!-- speed dial menu -->
       <v-flex xs2 text-xs-center>
-        <v-speed-dial v-model='fab' direction='right' left style='left:0' class='pa-0 ma-0'>
+        <v-speed-dial v-model='fab' direction='right' left style='left:0; z-index: 100' class='pa-0 ma-0'>
           <v-btn fab small :flat='paused' class='ma-0 teal elevation-0' slot='activator' v-model='fab' :loading='client.isLoading' :dark='!paused'>
             <v-icon>
               arrow_downward
