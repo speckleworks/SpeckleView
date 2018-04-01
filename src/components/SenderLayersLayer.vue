@@ -40,10 +40,12 @@ export default {
   },
   methods: {
     mouseOver( ) {
-      Interop.setLayerHover( this.clientId, this.layer.guid, true )
+       console.log( 'mouseOver' )
+      this.$emit( 'setLayerHover', this.clientId, this.layer.guid )
     },
     mouseOut( ) {
-      Interop.setLayerHover( this.clientId, this.layer.guid, false )
+      console.log( 'mouseOut' )
+      this.$emit( 'hideLayerHover', this.clientId, this.layer.guid )
     },
     bake( ) {
       Interop.bakeLayer( this.clientId, this.layer.guid )
