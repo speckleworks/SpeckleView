@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class='layer-list'>
-    <layer v-for='layer in layers' :key='layer.guid' :layer='layer' :clientId='clientId' class='layer layers-section' @setLayerHover='setLayerHover'></layer>
+    <layer v-for='layer in layers' :key='layer.guid' :layer='layer' :clientId='clientId' class='layer layers-section' @setLayerHover='setLayerHover' @hideLayerHover='hideLayerHover'></layer>
   </v-container>
 </template>
 <script>
@@ -22,9 +22,12 @@ export default {
     return {}
   },
   methods: {
-    setLayerHover: _.debounce( ( clientId, layerGuid, state ) => {
-      Interop.setLayerHover( clientId, layerGuid, state )
-    }, 500 )
+    hideLayerHover: _.debounce( ( clientId, layerGuid ) => {
+      Interop.setLayerHover( clientId, layerGuid, false )
+    }, 250 ),
+    setLayerHover: _.debounce( ( clientId, layerGuid ) => {
+      Interop.setLayerHover( clientId, layerGuid, true )
+    }, 250 )
   },
   mounted( ) {}
 }

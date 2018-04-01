@@ -52,12 +52,14 @@ export default {
       EventBus.$emit( 'layer-set-all-vis', { state: this.visible, clientId: this.clientId } )
     },
     mouseOver( ) {
-      console.log( 'mouseOver')
-      Interop.setLayerHover( this.clientId, this.layer.guid, true )
+      console.log( 'mouseOver' )
+      this.$emit( 'setLayerHover', this.clientId, this.layer.guid )
+      // Interop.setLayerHover( this.clientId, this.layer.guid, true )
     },
     mouseOut( ) {
-      console.log( 'mouseOut')
-      Interop.setLayerHover( this.clientId, this.layer.guid, false )
+      console.log( 'mouseOut' )
+      this.$emit( 'hideLayerHover', this.clientId, this.layer.guid )
+      // Interop.setLayerHover( this.clientId, this.layer.guid, false )
     },
     bake( ) {
       Interop.bakeLayer( this.clientId, this.layer.guid )
