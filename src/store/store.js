@@ -9,7 +9,8 @@ export default new Vuex.Store( {
     clients: [ ],
     selection: [ ],
     layerInfo: [ ],
-    globalLoading: false
+    globalLoading: false,
+    hostApplicaiton: 'Default'
   },
   getters: {
     accounts: state => state.accounts,
@@ -21,10 +22,19 @@ export default new Vuex.Store( {
     layerInfo: state => state.layerInfo
   },
   actions: {
+    getHostApplication( context ) {
+      Interop.getHostApplicationType( )
+        .then( res => {
+          console.log( 'Setting base host application as ' + res )
+          context.commit( 'SET_HOSTAPP', res )
+        } )
+        .catch( err => {
+          console.log( 'Failed to get host application from interop.' )
+        } )
+    },
     getUserAccounts( context ) {
       Interop.getUserAccounts( )
         .then( res => {
-          console.log( 'getuseraccounts' ,res )
           context.commit( 'SET_ACCOUNTS', JSON.parse( res ) )
         } )
         .catch( err => {} )
@@ -32,7 +42,7 @@ export default new Vuex.Store( {
     getFileStreams( context ) {
       Interop.getAllClients( )
         .then( res => {
-          console.log( 'getallclients' ,res )
+          console.log( 'getallclients', res )
           context.commit( 'SET_CLIENTS', JSON.parse( res ) )
         } )
         .catch( err => {} )
@@ -51,8 +61,11 @@ export default new Vuex.Store( {
     SET_GL_LOAD( state, payload ) {
       state.globalLoading = payload
     },
+    SET_HOSTAPP( state, payload ) {
+      state.hostApplicaiton = payload
+    },
     SET_ACCOUNTS( state, payload ) {
-      console.log(  payload )
+      console.log( payload )
       state.accounts = payload
     },
     ADD_ACCOUNTS( state, payload ) {

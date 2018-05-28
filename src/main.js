@@ -46,7 +46,7 @@ new Vue( {
     // Populate with existing accounts
     this.$store.dispatch( 'getUserAccounts' )
     this.$store.dispatch( 'getFileStreams' )
-    console.log( this.$store )
+    
     EventBus.$on( 'client-purge', ( ) => {
       console.log( 'purge-purge' )
       this.$store.commit( 'PURGE_CLIENTS' )
