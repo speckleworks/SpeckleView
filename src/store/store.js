@@ -10,7 +10,7 @@ export default new Vuex.Store( {
     selection: [ ],
     layerInfo: [ ],
     globalLoading: false,
-    hostApplicaiton: 'Default'
+    hostApplication: null
   },
   getters: {
     accounts: state => state.accounts,
@@ -62,7 +62,7 @@ export default new Vuex.Store( {
       state.globalLoading = payload
     },
     SET_HOSTAPP( state, payload ) {
-      state.hostApplicaiton = payload
+      state.hostApplication = payload
     },
     SET_ACCOUNTS( state, payload ) {
       console.log( payload )

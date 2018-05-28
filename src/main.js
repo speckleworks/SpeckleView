@@ -7,7 +7,7 @@ import VeeValidate from 'vee-validate'
 import App from './App.vue'
 import Store from './store/store.js'
 
-import 'vuetify/dist/vuetify.min.css' 
+import 'vuetify/dist/vuetify.min.css'
 
 window.Store = Store
 
@@ -44,6 +44,7 @@ new Vue( {
   render: h => h( App ),
   mounted( ) {
     // Populate with existing accounts
+    this.$store.dispatch( 'getHostApplication' )
     this.$store.dispatch( 'getUserAccounts' )
     this.$store.dispatch( 'getFileStreams' )
     
@@ -74,7 +75,7 @@ new Vue( {
     } )
 
     EventBus.$on( 'client-children', ( streamId, data ) => {
-      console.log( 'client-children', streamId,  data )
+      console.log( 'client-children', streamId, data )
       this.$store.commit( 'SET_CLIENT_CHILDREN', { streamId: streamId, data: JSON.parse( data ) } )
     } )
 
