@@ -14,8 +14,9 @@
     </v-card>
     <v-container fluid v-if='clients.length > 0' style='min-height: 100%;' class='pa-0'>
       <template v-for='client in clients'>
-        <receiver v-if='client.Role === 1' :client='client'></receiver>
-        <sender v-else :client='client'></sender>
+        <component :is='getClientType( client.Role )' :client='client'></component>
+        <!-- <rhino-receiver v-if='client.Role === 1' :client='client'></rhino-receiver>
+        <rhino-sender v-else :client='client'></rhino-sender> -->
       </template>
     </v-container>
   </div>
@@ -23,8 +24,13 @@
 <script>
 import ReceiverAdd from './ClientReceiverAdd.vue'
 import SenderAdd from './ClientSenderAdd.vue'
-import Receiver from './Receiver.vue'
-import Sender from './Sender.vue'
+
+import RhinoReceiver from './RhinoReceiver.vue'
+import RhinoSender from './RhinoSender.vue'
+import RevitReceiver from './RevitReceiver.vue'
+import RevitSender from './RevitSender.vue'
+
+
 import { EventBus } from '../event-bus'
 
 export default {
@@ -32,8 +38,8 @@ export default {
   components: {
     ReceiverAdd,
     SenderAdd,
-    Receiver,
-    Sender
+    RhinoReceiver, RhinoSender,
+    RevitReceiver, RevitSender
   },
   computed: {
     clients( ) {
@@ -41,6 +47,14 @@ export default {
     },
     glLoading( ) {
       return this.$store.state.globalLoading
+    },
+    hostApp( ) {
+      return this.$store.state.hostApplication
+    },
+    receiverComponent( ) {
+
+    },
+    senderComponent( ) { 
     }
   },
   data( ) {
@@ -49,7 +63,16 @@ export default {
     }
   },
   methods: {
-    getFileClients( ) {}
+    getClientType( role ) {
+      switch( role ) {
+        case 1: 
+          return this.hostApp.toLowerCase( ) + '-receiver'
+        break
+        default:
+          return this.hostApp.toLowerCase( ) + '-sender'
+        break
+      }
+    }
   },
   mounted( ) {}
 }
