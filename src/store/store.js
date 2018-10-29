@@ -72,7 +72,7 @@ export default new Vuex.Store( {
       state.accounts = [ ...state.accounts, ...payload ]
     },
     DELETE_ACCOUNT( state, payload ) {
-      state.accounts = state.accounts.filter( item => item.fileName !== payload )
+      state.accounts = state.accounts.filter( item => item.accountId !== payload )
     },
     ADD_CLIENT( state, payload ) {
       console.log( payload )

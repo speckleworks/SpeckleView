@@ -4,7 +4,7 @@ export default {
   getStreams( account ) {
     return new Promise( ( resolve, reject ) => {
       if ( !account ) return reject( 'No account provided' )
-      Axios.get( account.restApi + '/streams', { headers: { 'Authorization': account.apiToken } } )
+      Axios.get( account.restApi + '/streams', { headers: { 'Authorization': account.token } } )
         .then( res => {
           resolve( res.data )
         } )
@@ -15,7 +15,7 @@ export default {
   },
 
   updateStreamName( client ) {
-    return Axios.put( client.BaseUrl + '/streams/' + client.stream.streamId, { name: client.stream.name }, { headers:  { 'Authorization': client.ApiToken } } )
+    return Axios.put( client.BaseUrl + '/streams/' + client.stream.streamId, { name: client.stream.name }, { headers:  { 'Authorization': client.token } } )
   },
 
   registerAccount( data ) {
