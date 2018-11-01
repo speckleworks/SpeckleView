@@ -105,6 +105,7 @@ export default new Vuex.Store( {
       let client = state.clients.find( c => c.stream.streamId === payload.streamId )
       if ( !client ) return console.warn( 'No client found! ' + payload.streamId )
       if ( !client.log ) client.log = [ ]
+      if( payload.data == "Got a ws ping.") return // hack  of the century
       client.log.unshift( { timestamp: new Date( ), message: payload.data } )
       if ( client.log.length > 5 ) {
         client.log.pop( )

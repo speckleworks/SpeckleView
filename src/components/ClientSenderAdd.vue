@@ -103,11 +103,13 @@ export default {
         this.fail = true
         return
       }
+      
       if ( !this.streamName || /^\s*$/.test( this.streamName ) ) {
         this.error = 'Please input a stream name.'
         this.fail = true
         return
       }
+      
       if ( this.objectSelection.length == 0 ) {
         this.error = 'Please select some objects.'
         this.fail = true
@@ -117,9 +119,9 @@ export default {
       let payload = {
         account: this.selectedAccount,
         streamName: this.streamName,
-        selection: this.objectSelection.reduce( ( a, l ) => { return [ ...a, ...l.objectGuids ] }, [ ] )
+        selection: this.objectSelection.reduce( ( a, l ) => { return [ ...a, ...l.ObjectGuids ] }, [ ] )
       }
-
+      
       Interop.addSenderClientFromSelection( JSON.stringify( payload ) )
       this.visible = false
     }

@@ -96,7 +96,7 @@
           <template v-for='log in client.log'>
             <div class='caption' mb-5>
               <v-divider></v-divider>
-              {{ log.timestamp }}: {{ log.message }}
+              <timeago :auto-update='10' :since='log.timestamp'></timeago>: {{ log.message }}
             </div>
           </template>
         </div>

@@ -79,9 +79,9 @@
       <v-btn icon @click.native='toggleLayers' small>
         <v-icon class='xs-actions'>{{ showLayers ? 'keyboard_arrow_up' : 'layers' }}</v-icon>
       </v-btn>
-      <!-- <v-btn icon @click.native='toggleLog' small>
+      <v-btn icon @click.native='toggleLog' small>
           <v-icon class='xs-actions'>{{ showLog ? 'keyboard_arrow_up' : 'list' }}</v-icon>
-        </v-btn> -->
+        </v-btn>
 <!--       <v-btn icon @click.native='toggleChildren' small>
         <v-icon class='xs-actions'>{{ showChildren ? 'keyboard_arrow_up' : 'history' }}</v-icon>
       </v-btn> -->
@@ -102,7 +102,7 @@
           <template v-for='log in client.log'>
             <div class='caption' mb-5>
               <v-divider></v-divider>
-              {{ log.timestamp }}: {{ log.message }}
+              <timeago :auto-update='10' :since='log.timestamp'></timeago>: {{ log.message }}
             </div>
           </template>
         </div>
