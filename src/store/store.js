@@ -84,6 +84,9 @@ export default new Vuex.Store( {
       payload.client.expired = false
       payload.client.lastUpdate = new Date( )
       payload.client.progressMessage = null
+      let acc = state.accounts.find( ac => ac.email === payload.client.UserEmail && ac.restApi === payload.client.BaseUrl )
+      if ( acc != null )
+        payload.client.ApiToken = acc.token
       state.clients.unshift( payload.client )
     },
     SET_CLIENT_CHILDREN( state, payload ) {
@@ -105,7 +108,7 @@ export default new Vuex.Store( {
       let client = state.clients.find( c => c.stream.streamId === payload.streamId )
       if ( !client ) return console.warn( 'No client found! ' + payload.streamId )
       if ( !client.log ) client.log = [ ]
-      if( payload.data == "Got a ws ping.") return // hack  of the century
+      if ( payload.data == "Got a ws ping." ) return // hack  of the century
       client.log.unshift( { timestamp: new Date( ), message: payload.data } )
       if ( client.log.length > 5 ) {
         client.log.pop( )
@@ -147,6 +150,7 @@ export default new Vuex.Store( {
       client.expired = false
     },
     SET_SELECTION( state, payload ) {
+      console.log( payload )
       state.selection = payload.selectionInfo
     },
     SET_LAYERINFO( state, payload ) {

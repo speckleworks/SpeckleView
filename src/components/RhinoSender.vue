@@ -221,12 +221,12 @@ export default {
   methods: {
     addObjectsToStream( ) {
       console.log(this.objectSelection)
-      let guids = this.objectSelection.reduce( ( acc, obj ) => [ ...obj.ObjectGuids, ...acc ], [ ] )
+      let guids = this.objectSelection.reduce( ( acc, obj ) => [ ...obj.objectGuids, ...acc ], [ ] )
       Interop.addRemoveObjects( this.client.ClientId, JSON.stringify( guids ), false )
       this.showAddRemoveDialog = false
     },
     removeObjectsFromStream( ) {
-      let guids = this.objectSelection.reduce( ( acc, obj ) => [ ...obj.ObjectGuids, ...acc ], [ ] )
+      let guids = this.objectSelection.reduce( ( acc, obj ) => [ ...obj.objectGuids, ...acc ], [ ] )
       Interop.addRemoveObjects( this.client.ClientId, JSON.stringify( guids ), true )
       this.showAddRemoveDialog = false
     },
@@ -268,6 +268,7 @@ export default {
       this.newStreamName = this.client.stream.name
     },
     saveStreamName( ) {
+      console.log( this.client )
       this.$validator.validateAll( ).then( result => {
         if ( !result ) return
         this.streamNameSaving = true

@@ -34,9 +34,10 @@ export default {
   data( ) {
     return {}
   },
-  methods: {
+  methods: { 
     viewStream( ) {
-      Interop.openUrl( this.restApi.replace('api/v1', 'view') + '/?streams=' + this.streamId )
+      let url = this.restApi.split('/api')[0]
+      Interop.openUrl( url + '/view/?streams=' + this.streamId )
     },
     viewData( ) {
       Interop.openUrl( this.restApi + '/streams/' + this.streamId )

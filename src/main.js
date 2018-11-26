@@ -49,67 +49,68 @@ new Vue( {
     this.$store.dispatch( 'getFileStreams' )
     
     EventBus.$on( 'client-purge', ( ) => {
-      console.log( 'purge-purge' )
+      // console.log( 'purge-purge' )
       this.$store.commit( 'PURGE_CLIENTS' )
     } )
 
     EventBus.$on( 'client-add', ( streamId, data ) => {
-      console.log( 'client-add', streamId, data )
+      // console.log( 'client-add', streamId, data )
       this.$store.commit( 'ADD_CLIENT', JSON.parse( data ) )
     } )
 
     EventBus.$on( 'client-metadata-update', ( streamId, data ) => {
-      console.log( 'client-metadata-update', streamId, data )
+      // console.log( 'client-metadata-update', streamId, data )
       this.$store.commit( 'SET_METADATA', { streamId: streamId, stream: JSON.parse( data ) } )
     } )
 
     EventBus.$on( 'client-log', ( streamId, data ) => {
-      console.log( 'client-log', streamId, data )
+      // console.log( 'client-log', streamId, data )
       this.$store.commit( 'APPEND_LOG', { streamId: streamId, data: JSON.parse( data ) } )
     } )
 
     EventBus.$on( 'client-error', ( streamId, data ) => {
-      console.log( 'client-error', streamId, data )
+      // console.log( 'client-error', streamId, data )
       this.$store.commit( 'APPEND_LOG', { streamId: streamId, data: JSON.parse( data ) } )
       this.$store.commit( 'SET_ERROR', { streamId: streamId, data: JSON.parse( data ) } )
     } )
 
     EventBus.$on( 'client-children', ( streamId, data ) => {
-      console.log( 'client-children', streamId, data )
+      // console.log( 'client-children', streamId, data )
       this.$store.commit( 'SET_CLIENT_CHILDREN', { streamId: streamId, data: JSON.parse( data ) } )
     } )
 
     EventBus.$on( 'client-is-loading', ( streamId, data ) => {
-      console.log( 'client-is-loading', streamId, data )
+      // console.log( 'client-is-loading', streamId, data )
       this.$store.commit( 'SET_LOADING', { streamId: streamId, status: true } )
     } )
 
     EventBus.$on( 'client-done-loading', ( streamId, data ) => {
-      console.log( 'client-done-loading', streamId, data )
+      // console.log( 'client-done-loading', streamId, data )
       this.$store.commit( 'SET_LOADING', { streamId: streamId, status: false } )
     } )
 
     EventBus.$on( 'client-progress-message', ( streamId, data ) => {
-      console.log( 'client-progress-message', streamId, data )
+      // console.log( 'client-progress-message', streamId, data )
       this.$store.commit( 'SET_PROGRESS_MESSAGE', { streamId: streamId, message: data } )
     } )
 
     EventBus.$on( 'client-expired', ( streamId, data ) => {
-      console.log( 'client-expired', streamId, data )
+      // console.log( 'client-expired', streamId, data )
       this.$store.commit( 'SET_EXPIRED', { streamId: streamId, status: true } )
     } )
 
     EventBus.$on( 'client-ws-message', ( streamId, data ) => {
-      console.log( 'client-ws-message', streamId, data )
+      // console.log( 'client-ws-message', streamId, data )
     } )
 
     EventBus.$on( 'client-error', ( streamId, data ) => {
-      console.log( 'client-error', streamId, data )
+      // console.log( 'client-error', streamId, data )
       this.$store.commit( 'SET_ERROR', { streamId: streamId, data: JSON.parse( data ) } )
     } )
 
     EventBus.$on( 'object-selection', ( streamId, data ) => {
-      console.log( 'object-selection' )
+      // console.log( data )
+      // console.log( 'object-selection', data, JSON.parse( atob( data ) ) )
       if ( data == '[]' ) this.$store.commit( 'SET_SELECTION', { selectionInfo: [ ] } )
       else this.$store.commit( 'SET_SELECTION', { selectionInfo: JSON.parse( atob( data ) ) } )
     } )
