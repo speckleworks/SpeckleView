@@ -130,7 +130,7 @@ export default {
   methods: {
     openAdmin( ) {
       let parts = this.account.restApi.split( '/' )
-      window.open( parts[ 0 ] + '//' + parts[ 2 ] + '/admin', '_blank' )
+      window.open( parts[ 0 ] + '//' + parts[ 2 ], '_blank' )
     },
     deleteAccount( ) {
       Interop.removeAccount( this.account.accountId )
