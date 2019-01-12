@@ -75,8 +75,10 @@ export default {
         Interop.getLayersAndObjectsInfo( true )
           .then( res => {
             console.log( res )
-            this.$store.commit( 'SET_LAYERINFO', JSON.parse( window.atob( res ) ) )
-            this.layerSelectionMap = this.layerInfo.map( layer => { return { selected: false, layerName: layer.layerName, objectCount: layer.objectCount } } )
+            if ( res !== '[]' ) {
+              this.$store.commit( 'SET_LAYERINFO', JSON.parse( window.atob( res ) ) )
+              this.layerSelectionMap = this.layerInfo.map( layer => { return { selected: false, layerName: layer.layerName, objectCount: layer.objectCount } } )
+            }
           } )
         return
       }
@@ -103,11 +105,13 @@ export default {
         this.fail = true
         return
       }
+
       if ( !this.streamName || /^\s*$/.test( this.streamName ) ) {
         this.error = 'Please input a stream name.'
         this.fail = true
         return
       }
+
       if ( this.objectSelection.length == 0 ) {
         this.error = 'Please select some objects.'
         this.fail = true
@@ -150,7 +154,9 @@ export default {
 .list__tile__title,
 .input-group__selections__comma {
   white-space: nowrap;
-} // .input-group__details {
+}
+
+// .input-group__details {
 //   display: none;
 // }
 </style>

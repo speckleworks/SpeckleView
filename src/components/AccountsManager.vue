@@ -12,6 +12,7 @@
         <div slot='header'>
           <div class="subheading">{{account.serverName}}</div>
           <div class='caption'>{{account.email}}</div>
+          <!-- <div class='caption'>{{account.isDefault}}</div> -->
         </div>
         <account :account='account'></account>
       </v-expansion-panel-content>

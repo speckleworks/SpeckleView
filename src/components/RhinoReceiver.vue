@@ -32,8 +32,17 @@
             {{ client.stream.name }}
           </p>
           <br>
-          <div class='caption' style='display: block; width:100%'> <span class='grey--text text--darkenx'><code class='grey darken-2 white--text' style='user-select: all; cursor: pointer;'>{{ client.stream.streamId }}</code> {{paused ? "(paused)" : ""}} updated:
+          <div class='caption' style='display: block; width:100%'>
+            <span class='grey--text text--darkenx'>
+            <code class='grey darken-2 white--text' style='user-select: all; cursor: pointer;'>{{ client.stream.streamId }}</code> 
+            <span>
+              {{paused ? "(paused)" : ""}} updated:
               <timeago :auto-update='10' :since='client.lastUpdate'></timeago></span>
+            </span>
+          </div>
+          <div class='caption grey--text' style='display: block; width:100%'>
+          <timeago :auto-update='10' :since='client.log[0].timestamp'></timeago>: 
+          {{client.log[0].message}}
           </div>
         </v-card-title>
       </v-flex>
@@ -63,9 +72,9 @@
             <v-btn class='xs-actions' icon @click.native='toggleLayers' small>
                 <v-icon class='xs-actions'>{{ showLayers ? 'keyboard_arrow_up' : 'layers' }}</v-icon>
             </v-btn>
-            <!--         <v-btn class='xs-actions' icon @click.native='toggleLog' small>
+                    <v-btn class='xs-actions' icon @click.native='toggleLog' small>
       <v-icon class='xs-actions'>{{ showLog ? 'keyboard_arrow_up' : 'list' }}</v-icon>
-    </v-btn> -->
+    </v-btn>
             <!-- <v-btn class='xs-actions' icon @click.native='toggleChildren' small>
       <v-icon class='xs-actions'>{{ showChildren ? 'keyboard_arrow_up' : 'history' }}</v-icon>
     </v-btn> -->
@@ -87,7 +96,7 @@
           <template v-for='log in client.log'>
             <div class='caption' mb-5>
               <v-divider></v-divider>
-              {{ log.timestamp }}: {{ log.message }}
+              <timeago :auto-update='10' :since='log.timestamp'></timeago>: {{ log.message }}
             </div>
           </template>
         </div>
