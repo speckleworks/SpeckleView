@@ -61,6 +61,7 @@ export default {
     selectedAccountValue( value ) {
       if ( !value ) return
       this.selectedAccount = this.accounts.find( ac => { return ac.serverName === value.split( ', ' )[ 0 ] && ac.email === value.split( ', ' )[ 1 ] } )
+      console.log( this.selectedAccount )
       API.getStreams( this.selectedAccount )
         .then( res => {
           this.fail = false

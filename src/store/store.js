@@ -79,6 +79,7 @@ export default new Vuex.Store( {
       payload.client.stream = payload.stream
       // extra props for the ui
       payload.client.log = [ { timestamp: new Date( ), message: 'Client added.' } ]
+      payload.client.token = payload.authToken
       payload.client.isLoading = false
       payload.client.error = null
       payload.client.expired = false

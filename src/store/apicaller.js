@@ -2,9 +2,10 @@ import Axios from 'axios'
 
 export default {
   getStreams( account ) {
+    console.log( account )
     return new Promise( ( resolve, reject ) => {
       if ( !account ) return reject( 'No account provided' )
-      Axios.get( account.restApi + '/streams?omit=objects,layers&isComputedResult=false&sort=updatedAt', { headers: { 'Authorization': account.token } } )
+      Axios.get( account.restApi + '/streams?omit=objects,layers&isComputedResult=false&sort=updatedAt', { headers: { 'Authorization': account.token } } 
         .then( res => {
           resolve( res.data )
         } )
@@ -15,7 +16,12 @@ export default {
   },
 
   updateStreamName( client ) {
+<<<<<<< Updated upstream
     return Axios.put( client.BaseUrl + '/streams/' + client.StreamId, { name: client.stream.name }, { headers:  { 'Authorization': client.ApiToken } } )
+=======
+    console.log( client )
+    return Axios.put( client.BaseUrl + '/streams/' + client.stream.streamId, { name: client.stream.name }, { headers:  { 'Authorization': client.token } } )
+>>>>>>> Stashed changes
   },
 
   registerAccount( data ) {

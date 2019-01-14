@@ -54,7 +54,6 @@ new Vue( {
     } )
 
     EventBus.$on( 'client-add', ( streamId, data ) => {
-      // console.log( 'client-add', streamId, data )
       this.$store.commit( 'ADD_CLIENT', JSON.parse( data ) )
     } )
 
