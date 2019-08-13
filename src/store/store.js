@@ -35,6 +35,7 @@ export default new Vuex.Store( {
     getUserAccounts( context ) {
       Interop.getUserAccounts( )
         .then( res => {
+          console.log( res )
           context.commit( 'SET_ACCOUNTS', JSON.parse( res ) )
         } )
         .catch( err => {} )

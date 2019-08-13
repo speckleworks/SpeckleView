@@ -1,15 +1,26 @@
 <template>
   <v-dialog fullscreen transition='dialog-bottom-transition' v-model='visible' style='width: 100%'>
     <v-card class=''>
-      <v-toolbar style="flex: 0 0 auto;" dark class='teal'>
+      <v-toolbar style="flex: 0 0 auto;" dark class='secondary'>
         <v-btn icon @click.native="visible = false" dark>
           <v-icon>close</v-icon>
         </v-btn>
         <v-toolbar-title>Add Receiver</v-toolbar-title>
       </v-toolbar>
+      <v-layout row wrap v-if='userAccounts.length===0' mt-4>
+        <v-flex px-4>
+          <v-card color='secondary' dark>
+            <v-img contain src='https://robohash.org/specklesucks' height='210'></v-img>
+            <v-card-text class='text-xs-center'>
+              <b>Howdy, stranger!</b> Seems you have no speckle accounts yet.
+              <v-btn block @click.native='showAccountPopup()'>add an account</v-btn>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
       <v-card-text text-center>
         <div class='step-1'>
-          <v-select required label='Account' v-bind:items='selectItems' v-model='selectedAccountValue' style='z-index: 9000' autocomplete :search-input:sync='selectItems'></v-select>
+          <v-select required label='Account' v-bind:items='userAccounts' v-model='selectedAccountValue' style='z-index: 9000' autocomplete :search-input:sync='userAccounts'></v-select>
           <br>
           <div class='headline grey--text' v-show='selectedAccountValue!=null'>
             <v-select label='Existing streams' v-bind:items='streamsMap' v-model='selectedStream' style='z-index: 9000' autocomplete :search-input.sync="streamsMap"></v-select>
@@ -38,7 +49,7 @@ export default {
     accounts( ) {
       return this.$store.getters.accounts
     },
-    selectItems( ) {
+    userAccounts( ) {
       return this.$store.getters.accounts.map( a => a.serverName + ', ' + a.email )
     },
     streamsMap: {
@@ -51,9 +62,13 @@ export default {
     }
   },
   watch: {
+    userAccounts( value ) {
+      if ( value.length !== 0 )
+        this.selectedAccountValue = value[ 0 ]
+    },
     selectedAccountValue( value ) {
       if ( !value ) return
-      this.selectedAccount = this.accounts.find( ac => { return ac.serverName === value.split(', ')[0] && ac.email === value.split(', ')[1] } )
+      this.selectedAccount = this.accounts.find( ac => { return ac.serverName === value.split( ', ' )[ 0 ] && ac.email === value.split( ', ' )[ 1 ] } )
       API.getStreams( this.selectedAccount )
         .then( res => {
           this.fail = false

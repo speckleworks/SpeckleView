@@ -1,12 +1,23 @@
 <template>
   <v-dialog fullscreen transition='dialog-bottom-transition' v-model='visible' style='width: 100%'>
     <v-card>
-      <v-toolbar style="flex: 0 0 auto;" dark class='light-blue'>
+      <v-toolbar style="flex: 0 0 auto;" dark class='primary'>
         <v-btn icon @click.native="visible = false" dark>
           <v-icon>close</v-icon>
         </v-btn>
         <v-toolbar-title>Add Sender</v-toolbar-title>
       </v-toolbar>
+      <v-layout row wrap v-if='userAccounts.length===0' mt-4>
+        <v-flex px-4>
+          <v-card color='primary' dark>
+            <v-img contain src='https://robohash.org/specklesucks' height='210'></v-img>
+            <v-card-text class='text-xs-center'>
+              <b>Howdy, stranger!</b> Seems you have no speckle accounts yet.
+              <v-btn block @click.native='showAccountPopup()'>add an account</v-btn>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
       <v-card-text text-center>
         <div class='step-1'>
           <v-form>
@@ -58,6 +69,10 @@ export default {
     layerInfo( ) { return this.$store.getters.layerInfo },
   },
   watch: {
+    userAccounts( value ) {
+      if ( value.length !== 0 )
+        this.selectedAccountValue = value[ 0 ]
+    },
     selectedAccountValue( value ) {
       if ( !value ) return
       this.selectedAccount = this.accounts.find( ac => { return ac.serverName === value.split( ', ' )[ 0 ] && ac.email === value.split( ', ' )[ 1 ] } )
@@ -100,6 +115,9 @@ export default {
     }
   },
   methods: {
+    showAccountPopup( ) {
+      Interop.showAccountPopup( )
+    },
     addSender( ) {
       if ( this.selectedAccount == null ) {
         this.error = 'Please select an account.'

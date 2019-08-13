@@ -37,13 +37,13 @@ export default {
   methods: { 
     viewStream( ) {
       let url = this.restApi.split('/api')[0]
-      Interop.openUrl( url + '/view/?streams=' + this.streamId )
+      Interop.openUrl( url + '/#/view/' + this.streamId )
     },
     viewData( ) {
       Interop.openUrl( this.restApi + '/streams/' + this.streamId )
     },
     viewObjects( ) {
-      Interop.openUrl( this.restApi + '/streams/' + this.streamId + '/objects/?omit=displayValue,base64' )
+      Interop.openUrl( this.restApi + '/streams/' + this.streamId + '/objects/?omit=displayValue,base64&limit=10' )
     }
   },
   mounted( ) {}

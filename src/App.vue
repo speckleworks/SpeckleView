@@ -1,83 +1,40 @@
 <template>
   <div id="app">
     <v-app :dark='dark'>
-      <!-- tabs with main content -->
-      <v-tabs v-model="active" color="blue" slider-color="white" dark grow>
-        <v-tab key='streams' ripple>
-          Streams
-        </v-tab>
-        <v-tab key='accounts' ripple>
-          Accounts
-        </v-tab>
-        <v-menu left bottom class="tabs__div">
-          <a class="tabs__item" slot="activator">
-            <v-icon>arrow_drop_down</v-icon>
-          </a>
-          <v-list xxxclass="grey lighten-3">
-            <v-list-tile>
-              <v-btn icon depressed @click.native='dark=!dark'>
-                <v-icon style='font-size: 14px;'>wb_incandescent</v-icon>
-              </v-btn flat>
-            </v-list-tile>
-            <v-list-tile>
-              <v-btn icon depressed @click.native='showDev'>
-                <v-icon style='font-size: 14px;'>code</v-icon>
-              </v-btn>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
-        <v-tab-item key='streams'>
-          <v-card flat>
+      <v-toolbar style='z-index:1;'>
+        <v-btn @click='showAccountPopup()' icon small>
+          <v-icon class='small' small>account_circle</v-icon>
+        </v-btn>
+        <v-toolbar-title class="headline text-uppercase mx-0">
+          Spe<span @click='showDev()'>ck</span>le
+          <span class="font-weight-light">Rhino</span>
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn color="secondary" dark absolute bottom right fab :ripple="false" @click.native='addReceiver()'>
+          <v-icon>cloud_download</v-icon>
+        </v-btn>
+        <v-btn color="primary" absolute bottom right fab :ripple="false" @click.native='addSender()' style="margin-right:60px">
+          <v-icon>cloud_upload</v-icon>
+        </v-btn>
+      </v-toolbar>
+      <v-content>
+        <v-container grid-list-md pa-0 mt-4>
+          <v-layout row wrap v-if='userAccounts.length===0'>
+            <v-flex px-4>
+              <v-card color='primary' dark>
+                <v-img contain src='https://robohash.org/specklesucks' height='210'></v-img>
+                <v-card-text class='text-xs-center'>
+                  <b>Howdy, stranger!</b> Seems you have no speckle accounts yet.
+                  <v-btn block @click.native='showAccountPopup()'>add an account</v-btn>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+          </v-layout>
+          <v-layout row wrap>
             <client-manager></client-manager>
-          </v-card>
-        </v-tab-item>
-        <v-tab-item key='accounts'>
-          <v-card flat>
-            <accounts-manager></accounts-manager>
-          </v-card>
-        </v-tab-item>
-      </v-tabs>
-      <!-- clients fab menu -->
-      <v-fab-transition>
-        <v-speed-dial v-model='fab' :open-on-hover="true" fixed bottom right direction='top' v-show='active==0'>
-          <v-btn slot='activator' fab v-model='fab' dark>
-            <v-icon>add</v-icon>
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-tooltip left>
-            <span>New Receiver</span>
-            <v-btn fab dark color='cyan' slot='activator' @click='addReceiver'>
-              <v-icon>cloud_download</v-icon>
-            </v-btn>
-          </v-tooltip>
-          <v-tooltip left>
-            <span>New Sender</span>
-            <v-btn fab dark color='light-blue' slot='activator' @click='addSender'>
-              <v-icon>cloud_upload</v-icon>
-            </v-btn>
-          </v-tooltip>
-        </v-speed-dial>
-      </v-fab-transition>
-      <!-- accounts fab menu -->
-      <v-fab-transition>
-        <v-speed-dial v-model='fab' :open-on-hover="true" fixed bottom right direction='top' v-show='active==1'>
-          <v-btn slot='activator' fab v-model='fab' dark>
-            <v-icon>add</v-icon>
-          </v-btn>
-          <v-tooltip left>
-            <span>Register New Account</span>
-            <v-btn fab dark color='pink' slot='activator' @click.native='showRegistration'>
-              <v-icon>person_add</v-icon>
-            </v-btn>
-          </v-tooltip>
-          <v-tooltip left>
-            <span>Login to old account</span>
-            <v-btn fab dark color='blue' slot='activator' @click.native='showLogin'>
-              <v-icon>person</v-icon>
-            </v-btn>
-          </v-tooltip>
-        </v-speed-dial>
-      </v-fab-transition>
+          </v-layout>
+        </v-container>
+      </v-content>
       <register-form></register-form>
       <login-form></login-form>
     </v-app>
@@ -103,6 +60,9 @@ export default {
     active( newValue ) {
       console.log( newValue )
     }
+  },
+  computed: {
+    userAccounts( ) { return this.$store.getters.accounts.map( a => a.serverName + ', ' + a.email ) },
   },
   data( ) {
     return {
@@ -137,6 +97,9 @@ export default {
       Interop.removeAllClients( )
         .then( res => {} )
         .catch( res => {} )
+    },
+    showAccountPopup( ) {
+      Interop.showAccountPopup( )
     }
   }
 }
@@ -152,7 +115,7 @@ body {}
   transition: all .3s ease;
 }
 
-.receiver-content:last-child{
+.receiver-content:last-c hild {
   margin-bottom: 90px;
 }
 

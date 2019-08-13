@@ -14,7 +14,18 @@ window.Store = Store
 import { EventBus } from './event-bus'
 
 Vue.use( Vuex )
-Vue.use( Vuetify )
+Vue.use( Vuetify, {
+  theme: {
+    primary: '#0080FF',
+    secondary: '#26c2f2',
+    accent: '#82B1FF',
+    error: '#FF5252',
+    info: '#2196F3',
+    success: '#4CAF50',
+    warning: '#FFC107'
+  },
+  iconfont: 'md',
+} )
 Vue.use( VeeValidate )
 
 Vue.use( VueTimeago, {
@@ -28,11 +39,11 @@ Vue.use( VueTimeago, {
 Vue.component( 'editable', {
   template: '<div contenteditable="true" @input="update"></div>',
   props: [ 'content' ],
-  mounted: function( ) {
+  mounted: function ( ) {
     this.$el.innerText = this.content;
   },
   methods: {
-    update: function( event ) {
+    update: function ( event ) {
       this.$emit( 'update', event.target.innerText );
     }
   }
@@ -47,7 +58,7 @@ new Vue( {
     this.$store.dispatch( 'getHostApplication' )
     this.$store.dispatch( 'getUserAccounts' )
     this.$store.dispatch( 'getFileStreams' )
-    
+
     EventBus.$on( 'client-purge', ( ) => {
       // console.log( 'purge-purge' )
       this.$store.commit( 'PURGE_CLIENTS' )
@@ -117,6 +128,10 @@ new Vue( {
     EventBus.$on( 'set-gl-load', ( streamId, state ) => {
       this.$store.commit( 'SET_GL_LOAD', state === 'true' )
     } )
+
+    EventBus.$on( 'refresh-accounts', () => {
+      this.$store.dispatch( 'getUserAccounts' )
+    })
 
     // tell .net that the app is ± ready.
     Interop.appReady( )
